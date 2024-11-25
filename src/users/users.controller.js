@@ -1,18 +1,5 @@
 const usersModel = require("./users.model");
 
-const postUser = async (req, res) => {
-  try {
-    const newUser = await usersModel({ ...req.body });
-    await newUser.save();
-    res
-      .status(200)
-      .send({ message: "user posted successfully", user: newUser });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ message: "user posted failed" });
-  }
-};
-
 const getAllUsers = async (req, res) => {
   try {
     const users = await usersModel.find();
@@ -35,15 +22,16 @@ const getOneUser = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) => {
-  const id = req.params.id;
+const postUser = async (req, res) => {
   try {
-    const user = await usersModel.findByIdAndDelete(id);
-    if (!user) res.status(404).send({ message: "this user is'n found" });
-    res.status(200).send(user);
+    const newUser = await usersModel({ ...req.body });
+    await newUser.save();
+    res
+      .status(200)
+      .send({ message: "user posted successfully", user: newUser });
   } catch (error) {
     console.error(error);
-    res.status(500).send({ message: "user delete failed" });
+    res.status(500).send({ message: "user posted failed" });
   }
 };
 
@@ -58,6 +46,18 @@ const updateUser = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "user update failed" });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const user = await usersModel.findByIdAndDelete(id);
+    if (!user) res.status(404).send({ message: "this user is'n found" });
+    res.status(200).send(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "user delete failed" });
   }
 };
 
