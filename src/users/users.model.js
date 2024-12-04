@@ -8,7 +8,6 @@ const usersSchema = new Schema(
     email: String, // email
     age: Number, // age
   },
-  { timestamps: true } // to save a time of create user and update it as "create at: {time}, update at: {time}"
 );
 
 // make a user model and this model in users table
